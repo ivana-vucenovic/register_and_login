@@ -1,0 +1,12 @@
+*{
+    /* outline: 3px solid red; */
+    margin: 0 40px;
+    padding: 5px 0;
+    background-color: rgb(204, 241, 229);
+}
+input{
+    background-color: beige;
+}
+button{
+    background-color: cadetblue;
+}
