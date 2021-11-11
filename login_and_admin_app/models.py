@@ -5,13 +5,12 @@ import bcrypt
 class UserManager(models.Manager):
     def registration_validator(self, postData):
         EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
-        # current_users = User.objects.filter(email=postData['email'])
         errors = {}
         if len(postData['first_name']) < 2:
             errors ['first_name'] = "First Name should be at least 2 characters"
         if len(postData['last_name']) < 2:
             errors ['last_name'] = "Last Name should be at least 2 characters"
-        if not EMAIL_REGEX.match(postData['email']):    # test whether a field matches the pattern            
+        if not EMAIL_REGEX.match(postData['email']):           
             errors['email'] = "Invalid email address!"
         current_users = User.objects.filter(email=postData['email'])
         if len(current_users) > 0:
@@ -25,7 +24,6 @@ class UserManager(models.Manager):
     def login_validator(self, postData):
         errors = {}
         existing_user = User.objects.filter(email=postData['email'])
-        print (existing_user)
         if len(postData['email']) == 0:
             errors ['email'] = "Email required"
         if len(postData['password']) < 8:
@@ -33,8 +31,6 @@ class UserManager(models.Manager):
         if bcrypt.checkpw(postData['password'].encode(),existing_user[0].password.encode()) != True:
             errors['password'] = 'Email and password do not match'
         return errors
-
-    
 
 class User(models.Model):
     first_name=models.CharField(max_length=45)
@@ -47,4 +43,3 @@ class User(models.Model):
 
 
 
-# Create your models here.
